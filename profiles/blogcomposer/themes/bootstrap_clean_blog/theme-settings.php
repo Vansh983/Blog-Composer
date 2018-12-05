@@ -47,7 +47,7 @@ function bootstrap_clean_blog_form_system_theme_settings_alter(&$form, FormState
     '#default_value' => theme_get_setting('bootstrap_clean_blog_header_image'),
   );
 
-  $default_url = Url::fromUri('base:' . drupal_get_path('theme', 'bootstrap_clean_blog') . '/images/home-bg.jpg')->setAbsolute()->toString();
+  $default_url = Url::fromUri('base:' . drupal_get_path('theme', 'bootstrap_clean_blog') . '/images/home-bg2.jpg')->setAbsolute()->toString();
 
   $form['header']['bootstrap_clean_blog_header_default'] = array(
     '#type' => 'textfield',

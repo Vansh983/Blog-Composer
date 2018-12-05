@@ -150,7 +150,7 @@ function blogcomposer_install_profile_modules(array &$install_state) {
   $files = system_rebuild_module_data();
 
   $modules = [
-    'blogcomposer_core' => 'blogcomposer_core',
+    'social_core' => 'social_core',
     'blogcomposer_user' => 'blogcomposer_user',
     'blogcomposer_group' => 'blogcomposer_group',
     'blogcomposer_event' => 'blogcomposer_event',
