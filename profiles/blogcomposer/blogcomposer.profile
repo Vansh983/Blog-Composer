@@ -5,7 +5,7 @@
  * Enables modules and site configuration for a blogcomposer site installation.
  */
 
- //This code is inpired from open blogcomposer distribution.
+ //This code is inpired from  blogcomposer distribution.
 
 use Drupal\user\Entity\User;
 use Drupal\Core\Form\FormStateInterface;
@@ -19,7 +19,7 @@ use Drupal\search_api\Entity\Index;
 function blogcomposer_install_tasks(&$install_state) {
   $tasks = [
     'blogcomposer_install_profile_modules' => [
-      'display_name' => t('Install Open blogcomposer modules'),
+      'display_name' => t('Install  blogcomposer modules'),
       'type' => 'batch',
     ],
     'blogcomposer_final_site_setup' => [
@@ -87,7 +87,7 @@ function blogcomposer_form_install_configure_form_alter(&$form, FormStateInterfa
   // Add 'blogcomposer' fieldset and options.
   $form['blogcomposer'] = [
     '#type' => 'fieldgroup',
-    '#title' => t('Open blogcomposer optional configuration'),
+    '#title' => t(' blogcomposer optional configuration'),
     '#description' => t('All the required modules and configuration will be automatically installed and imported. You can optionally select additional features or generated demo content.'),
     '#weight' => 50,
   ];
@@ -207,7 +207,7 @@ function blogcomposer_install_profile_modules(array &$install_state) {
 
   $batch = [
     'operations' => $operations,
-    'title' => t('Install Open blogcomposer modules'),
+    'title' => t('Install  blogcomposer modules'),
     'error_message' => t('The installation has encountered an error.'),
   ];
   return $batch;
