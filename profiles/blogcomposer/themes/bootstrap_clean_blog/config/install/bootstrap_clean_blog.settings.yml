@@ -1,0 +1,17 @@
+#Theme Settings for Bootstrap Clean Blog
+
+# Header
+# --------------
+bootstrap_clean_blog_header_image: ''
+bootstrap_clean_blog_header_default: ''
+
+# Social links
+# --------------
+bootstrap_clean_blog_social_facebook: 'https://www.facebook.com'
+bootstrap_clean_blog_social_twitter: 'https://twitter.com'
+bootstrap_clean_blog_social_github: 'https://github.com'
+bootstrap_clean_blog_social_drupal: 'https://drupal.org'
+bootstrap_clean_blog_social_instagram: 'https://instagram.com'
+bootstrap_clean_blog_social_reddit: 'https://reddit.com'
+bootstrap_clean_blog_social_flickr: 'https://flickr.com'
+bootstrap_clean_blog_social_linkedin: 'https://linkedin.com'

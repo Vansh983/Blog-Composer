@@ -1,0 +1,5 @@
+# Schema for the configuration files of the Bootstrap Clean Blog theme.
+
+bootstrap_clean_blog.settings:
+  type: theme_settings
+  label: 'Bootstrap settings'

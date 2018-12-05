@@ -1,0 +1,64 @@
+<?php
+/**
+ * @file
+ * Process and preprocess for theme.
+ */
+
+/**
+ * Implements hook_blog_preprocess_page().
+ */
+function bootstrap_clean_blog_preprocess_page(&$variables) {
+  $site_name = isset($variables['site_name']) ? $variables['site_name'] : \Drupal::config('system.site')->get('name');
+  $site_slogan = isset($variables['site_slogan']) ? $variables['site_slogan'] : \Drupal::config('system.site')->get('slogan');
+  $header_image = theme_get_setting('bootstrap_clean_blog_header_default');
+
+  $variables['display_submitted'] = FALSE;
+
+  if (isset($variables['node'])) {
+    /** @var \Drupal\node\NodeInterface $node */
+    $node = $variables['node'];
+
+    $field_header = theme_get_setting('bootstrap_clean_blog_header_image');
+
+    if (($node->{$field_header} instanceof \Drupal\file\Plugin\Field\FieldType\FileFieldItemList)
+    && (isset($node->{$field_header}[0])) && ($file = $node->{$field_header}[0]->entity)) {
+      /** @var \Drupal\file\FileInterface $file */
+      $header_image = $file->url();
+    }
+
+    $node_type = $node->type->entity;
+
+    $variables['date'] = \Drupal::service('date.formatter')->format($node->getCreatedTime());
+    $variables['author_name'] = $node->getOwner()->getAccountName();
+    $variables['display_submitted'] = $node_type->displaySubmitted();
+  }
+
+  $variables['site_name'] = $site_name;
+  $variables['site_slogan'] = $site_slogan;
+  $variables['header_image'] = $header_image;
+  $variables['social_links'] = array_filter([
+    'facebook' => theme_get_setting('bootstrap_clean_blog_social_facebook'),
+    'twitter' => theme_get_setting('bootstrap_clean_blog_social_twitter'),
+    'github' => theme_get_setting('bootstrap_clean_blog_social_github'),
+    'drupal' => theme_get_setting('bootstrap_clean_blog_social_drupal'),
+    'instagram' => theme_get_setting('bootstrap_clean_blog_social_instagram'),
+    'reddit' => theme_get_setting('bootstrap_clean_blog_social_reddit'),
+    'flickr' => theme_get_setting('bootstrap_clean_blog_social_flickr'),
+    'linkedin' => theme_get_setting('bootstrap_clean_blog_social_linkedin'),
+  ]);
+
+}
+
+/**
+ * Implements hook_blog_preprocess_node().
+ */
+function bootstrap_clean_blog_preprocess_node(&$variables) {
+  if (!$variables['page']) {
+    $variables['attributes']['class'][] = 'post-preview';
+    $variables['title_attributes']['class'][] = 'post-title';
+    $variables['content_attributes']['class'][] = 'post-subtitle';
+  }
+  else {
+    $variables['content_attributes']['class'][] = 'content';
+  }
+}

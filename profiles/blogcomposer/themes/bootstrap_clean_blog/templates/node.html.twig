@@ -1,0 +1,32 @@
+{#
+
+/**
+ * @file
+ * Default theme implementation to display a node.
+ */
+#}
+<article{{ attributes }}>
+
+  {{ title_prefix }}
+  {% if not page %}
+    <h2{{ title_attributes }}>
+      <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+    </h2>
+  {% endif %}
+  {{ title_suffix }}
+
+  {% if display_submitted %}
+    <div class="post-meta submitted">
+      {{ author_picture }}
+      <div{{ author_attributes }}>
+        {% trans %}Posted by {{ author_name }} on {{ date }}{% endtrans %}
+        {{ metadata }}
+      </div>
+    </div>
+  {% endif %}
+
+  <div{{ content_attributes }}>
+    {{ content }}
+  </div>
+
+</article>

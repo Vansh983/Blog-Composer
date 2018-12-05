@@ -1,0 +1,29 @@
+body {
+  margin-top: 0;
+}
+
+.site-heading h1 {
+  word-wrap: break-word;
+}
+
+.navbar-default .navbar-nav > .active > a {
+  color: #fff;
+  background-color: transparent;
+}
+
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > .active > a:hover {
+  color: rgba(255, 255, 255, .8);
+  background-color: transparent;
+}
+
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  background-color: transparent;
+}
+
+.view .feed-icons {
+  /*clear: both;*/
+  /*margin-top: 50px;*/
+  display: none;
+}

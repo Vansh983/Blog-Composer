@@ -1,0 +1,10 @@
+social_post_twitter.settings:
+  type: config_object
+  label: 'Social Post Twitter settings'
+  mapping:
+    consumer_key:
+      type: text
+      label: 'Consumer Key'
+    consumer_secret:
+      type: text
+      label: 'Consumer Secret'

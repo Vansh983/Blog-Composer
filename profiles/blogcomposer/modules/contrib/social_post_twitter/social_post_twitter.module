@@ -1,0 +1,126 @@
+<?php
+
+/**
+ * @file
+ * Contains social_post_twitter.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\Core\Session\AccountInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function social_post_twitter_form_user_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // If the for is the user edit form, not user register form or others.
+  // @see https://www.drupal.org/node/2854977
+  if ($form_id == 'user_form') {
+    $current_user = \Drupal::currentUser();
+
+    if (_social_post_twitter_can_grant_permission($current_user)) {
+      // Add a button to authorize twitter autoposting.
+      $form += _social_post_twitter_user_edit_form($current_user);
+    }
+  }
+}
+
+/**
+ * Check if the user is allowed to grant permission for autoposting.
+ *
+ * @param \Drupal\Core\Session\AccountInterface $current_user
+ *   The current user.
+ *
+ * @return bool
+ *   The user can or cannot allow tweeting on his behalf.
+ */
+function _social_post_twitter_can_grant_permission(AccountInterface $current_user) {
+  $routeMatch = \Drupal::service('current_route_match');
+
+  // If the current user has permission to autotwet and its id is the same as
+  // the user id of parameter.
+  if ($current_user->hasPermission('perform twitter autoposting tasks')
+    && $current_user->id() == $routeMatch->getParameter('user')->id()) {
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+/**
+ * Creates elements to the user edit form.
+ *
+ * @param \Drupal\Core\Session\AccountInterface $current_user
+ *   The current user.
+ *
+ * @return array
+ *   The elements to add to the user edit form.
+ */
+function _social_post_twitter_user_edit_form(AccountInterface $current_user) {
+  $accounts = _social_post_twitter_get_accounts_by_uid($current_user->id());
+
+  $form['social_post_twitter'] = [
+    '#type' => 'details',
+    '#title' => t('Social Post Twitter'),
+    '#open' => TRUE,
+  ];
+  $form['social_post_twitter']['accounts'] = [
+    '#type' => 'table',
+    '#header' => [t('Screen name'), t('Operations')],
+    '#empty' => t('You have not added any accounts yet.'),
+  ];
+
+  /* @var \Drupal\social_post\Entity\SocialPost $account */
+  foreach ($accounts as $id => $account) {
+    $form['social_post_twitter']['accounts'][$id]['screen_name'] = [
+      '#type' => 'link',
+      '#title' => $account->getName(),
+      '#url' => Url::fromUri('https://twitter.com/' . $account->getProviderUserId()),
+    ];
+    $form['social_post_twitter']['accounts'][$id]['operations'] = [
+      '#type' => 'operations',
+      '#links' => [
+        'delete' => [
+          'title' => t('Delete') ,
+          'url' => Url::fromRoute('entity.social_post.delete_form',
+            [
+              'provider' => 'twitter',
+              'social_post' => $account->getId(),
+              'user' => $current_user->id(),
+            ]
+          ),
+        ],
+      ],
+    ];
+  }
+
+  $form['social_post_twitter']['button'] = [
+    '#type' => 'link',
+    '#title' => t("Add account"),
+    '#attributes' => [
+      'class' => ['button'],
+    ],
+    '#url' => Url::fromRoute('social_post_twitter.redirect'),
+  ];
+
+  return $form;
+}
+
+/**
+ * Gets the accounts associated to the Drupal user.
+ *
+ * @param int $user_id
+ *   The user id.
+ *
+ * @return \Drupal\Core\Entity\EntityInterface[]
+ *   Accounts associated to the user id.
+ */
+function _social_post_twitter_get_accounts_by_uid($user_id) {
+  $accounts = \Drupal::entityTypeManager()->getStorage('social_post')->loadByProperties([
+    'user_id' => $user_id,
+    'plugin_id' => 'social_post_twitter',
+  ]);
+
+  return $accounts;
+}

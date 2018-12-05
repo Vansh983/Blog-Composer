@@ -1,0 +1,22 @@
+name : Bootstrap Clean Blog
+description : 'A Bootstrap Clean Blog sub-theme.'
+type: theme
+package: Bootstrap
+# core : 8.x
+base theme : bootstrap
+# version: VERSION
+regions:
+  header: Header
+  highlighted: Highlighted
+  content: Content
+  footer: Footer
+
+libraries:
+  - bootstrap_clean_blog/global-styling
+  - bootstrap_clean_blog/respond
+
+# Information added by Drupal.org packaging script on 2016-10-08
+version: '8.x-1.0-rc2'
+core: '8.x'
+project: 'bootstrap_clean_blog'
+datestamp: 1475907840

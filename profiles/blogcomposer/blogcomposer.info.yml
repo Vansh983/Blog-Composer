@@ -1,0 +1,41 @@
+name: Blog Composer
+type: profile
+description: 'Create a Blog easily'
+core: 8.x
+project: blogcomposer
+distribution:
+  name: Blog Composer
+langcode: en
+dependencies:
+  - node
+  - history
+  - block
+  - block_content
+  - breakpoint
+  - color
+  - config
+  - comment
+  - contextual
+  - contact
+  - quickedit
+  - help
+  - image
+  - options
+  - path
+  - taxonomy
+  - dblog
+  - search
+  - shortcut
+  - toolbar
+  - field_ui
+  - file
+  - rdf
+  - views
+  - views_ui
+  - editor
+  - ckeditor
+themes:
+  - bartik
+  - seven
+  - bootstrap
+  - bootstrap_clean_blog
