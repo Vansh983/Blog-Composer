@@ -3,7 +3,6 @@
 namespace Drupal\Tests\filter\Functional;
 
 use Drupal\comment\Tests\CommentTestTrait;
-use Drupal\Core\StreamWrapper\PrivateStream;
 use Drupal\Core\StreamWrapper\PublicStream;
 use Drupal\filter\Entity\FilterFormat;
 use Drupal\Tests\BrowserTestBase;
@@ -81,7 +80,6 @@ class FilterHtmlImageSecureTest extends BrowserTestBase {
     global $base_url;
 
     $public_files_path = PublicStream::basePath();
-    $private_files_path = PrivateStream::basePath();
 
     $http_base_url = preg_replace('/^https?/', 'http', $base_url);
     $https_base_url = preg_replace('/^https?/', 'https', $base_url);
@@ -103,10 +101,6 @@ class FilterHtmlImageSecureTest extends BrowserTestBase {
     $special_uri = str_replace($test_images[0]->filename, $special_filename, $test_images[0]->uri);
     file_unmanaged_copy($test_images[0]->uri, $special_uri);
 
-    // Put a test image in the private files directory.
-    $private_uri = str_replace('public://', 'private://', $test_images[0]->uri);
-    file_unmanaged_copy($test_images[0]->uri, $private_uri);
-
     // Create a list of test image sources.
     // The keys become the value of the IMG 'src' attribute, the values are the
     // expected filter conversions.
@@ -126,15 +120,11 @@ class FilterHtmlImageSecureTest extends BrowserTestBase {
       $https_base_url . '/' . $public_files_path . '/' . $test_image => $files_path . '/' . $test_image,
       $http_base_url . '/' . $public_files_path . '/' . $special_image => $files_path . '/' . $special_image,
       $https_base_url . '/' . $public_files_path . '/' . $special_image => $files_path . '/' . $special_image,
-      $http_base_url . '/' . $private_files_path . '/' . $test_image => base_path() . $private_files_path . '/' . $test_image,
-      $https_base_url . '/' . $private_files_path . '/' . $test_image => base_path() . $private_files_path . '/' . $test_image,
       $files_path . '/example.png' => $red_x_image,
       'http://example.com/' . $druplicon => $red_x_image,
       'https://example.com/' . $druplicon => $red_x_image,
       'javascript:druplicon.png' => $red_x_image,
       $csrf_path . '/logout' => $red_x_image,
-      // Test a url containing a query string.
-      $http_base_url . '/' . $druplicon . '?query=string' => base_path() . $druplicon . '?query=string',
     ];
     $comment = [];
     foreach ($images as $image => $converted) {

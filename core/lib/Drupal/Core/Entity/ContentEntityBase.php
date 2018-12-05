@@ -618,51 +618,6 @@ abstract class ContentEntityBase extends Entity implements \IteratorAggregate, C
   }
 
   /**
-   * Gets the value of a specific property of a field.
-   *
-   * Only the first delta can be accessed with this method.
-   *
-   * @param string $field_name
-   *   The name of the field.
-   * @param string $property
-   *   The field property, "value" for many field types.
-   *
-   * @return mixed
-   */
-  public function getFieldValue($field_name, $property) {
-    // Attempt to get the value from the values directly if the field is not
-    // initialized yet.
-    if (!isset($this->fields[$field_name])) {
-      $field_values = NULL;
-      if (isset($this->values[$field_name][$this->activeLangcode])) {
-        $field_values = $this->values[$field_name][$this->activeLangcode];
-      }
-      elseif ($this->values[$field_name][LanguageInterface::LANGCODE_DEFAULT]) {
-        $field_values = $this->values[$field_name][LanguageInterface::LANGCODE_DEFAULT];
-      }
-
-      if ($field_values !== NULL) {
-        // If there are field values, try to get the property value.
-        // Configurable/Multi-value fields are stored differently, try accessing
-        // with delta and property first, then without delta and last, if the
-        // value is a scalar, just return that.
-        if (isset($field_values[0][$property]) && is_array($field_values[0])) {
-          return $field_values[0][$property];
-        }
-        elseif (isset($field_values[$property]) && is_array($field_values)) {
-          return $field_values[$property];
-        }
-        elseif (!is_array($field_values)) {
-          return $field_values;
-        }
-      }
-    }
-
-    // Fall back to access the property through the field object.
-    return $this->get($field_name)->$property;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function set($name, $value, $notify = TRUE) {

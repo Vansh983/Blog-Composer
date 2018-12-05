@@ -5,7 +5,18 @@
     "license": "GPL-2.0-or-later",
     "require": {
         "composer/installers": "^1.0.24",
-        "wikimedia/composer-merge-plugin": "^1.4"
+        "wikimedia/composer-merge-plugin": "^1.4",
+        "drupal/slick": "^1.0",
+        "drupal/token": "^1.5",
+        "drupal/pathauto": "^1.3",
+        "drupal/ctools": "^3.0",
+        "drupal/geolocation": "^1.11",
+        "drupal/video_embed_field": "^2.0",
+        "drupal/back_to_top": "^1.0",
+        "drupal/social_api": "^2.0",
+        "drupal/social_post": "^2.0",
+        "drupal/social_post_twitter": "^2.0",
+        "drupal/social_auth_google": "^2.0"
     },
     "replace": {
         "drupal/core": "^8.6"
@@ -53,7 +64,7 @@
         "post-package-install": "Drupal\\Core\\Composer\\Composer::vendorTestCodeCleanup",
         "post-package-update": "Drupal\\Core\\Composer\\Composer::vendorTestCodeCleanup",
         "drupal-phpunit-upgrade-check": "Drupal\\Core\\Composer\\Composer::upgradePHPUnit",
-        "drupal-phpunit-upgrade": "@composer update phpunit/phpunit --with-dependencies --no-progress",
+        "drupal-phpunit-upgrade": "@composer update phpunit/phpunit phpspec/prophecy symfony/yaml --with-dependencies --no-progress",
         "phpcs": "phpcs --standard=core/phpcs.xml.dist --runtime-set installed_paths $($COMPOSER_BINARY config vendor-dir)/drupal/coder/coder_sniffer --",
         "phpcbf": "phpcbf --standard=core/phpcs.xml.dist --runtime-set installed_paths $($COMPOSER_BINARY config vendor-dir)/drupal/coder/coder_sniffer --"
     },

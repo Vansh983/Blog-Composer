@@ -5,7 +5,7 @@
  * Enables modules and site configuration for a blogcomposer site installation.
  */
 
- //This code is inpired from open social distribution.
+ //This code is inpired from open blogcomposer distribution.
 
 use Drupal\user\Entity\User;
 use Drupal\Core\Form\FormStateInterface;
@@ -73,50 +73,6 @@ function blogcomposer_verify_custom_requirements(array &$install_state) {
 
   // Added a custom check for users to see if the Address libraries are
   // downloaded.
-  if (!class_exists('\CommerceGuys\Addressing\Address')) {
-    $requirements['addressing_library'] = [
-      'title' => t('Address module requirements)'),
-      'value' => t('Not installed'),
-      'description' => t('The Address module requires the commerceguys/addressing library. <a href=":link" target="_blank">For more information check our readme</a>', [':link' => 'https://github.com/goalgorilla/drupal_blogcomposer/blob/master/readme.md#install-from-project-page-on-drupalorg']),
-      'severity' => REQUIREMENT_ERROR,
-    ];
-  }
-
-  if (!class_exists('\Facebook\Facebook')) {
-    $requirements['social_auth_facebook'] = [
-      'title' => t('social auth Facebook module requirements'),
-      'value' => t('Not installed'),
-      'description' => t('social auth Facebook requires Facebook PHP Library. Make sure the library is installed via Composer.'),
-      'severity' => REQUIREMENT_ERROR,
-    ];
-  }
-
-  if (!class_exists('\Google_Client')) {
-    $requirements['social_auth_google'] = [
-      'title' => t('social auth Google module requirements'),
-      'value' => t('Not installed'),
-      'description' => t('social auth Google requires Google_Client PHP Library. Make sure the library is installed via Composer.'),
-      'severity' => REQUIREMENT_ERROR,
-    ];
-  }
-
-  if (!class_exists('\Happyr\LinkedIn\LinkedIn')) {
-    $requirements['social_auth_linkedin'] = [
-      'title' => t('social auth LinkedIn module requirements'),
-      'value' => t('Not installed'),
-      'description' => t('social auth LinkedIn requires LinkedIn PHP Library. Make sure the library is installed via Composer.'),
-      'severity' => REQUIREMENT_ERROR,
-    ];
-  }
-
-  if (!class_exists('\Abraham\TwitterOAuth\TwitterOAuth')) {
-    $requirements['social_auth_twitter'] = [
-      'title' => t('social auth Twitter module requirements'),
-      'value' => t('Not installed'),
-      'description' => t('social auth Twitter requires TwitterOAuth PHP Library. Make sure the library is installed via Composer.'),
-      'severity' => REQUIREMENT_ERROR,
-    ];
-  }
 
   return install_display_requirements($install_state, $requirements);
 }

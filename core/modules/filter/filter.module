@@ -775,10 +775,6 @@ function _filter_html_image_secure_process($text) {
   $base_path = base_path();
   $base_path_length = mb_strlen($base_path);
 
-  // Find the private path.
-  $private_path = '/system/files/';
-  $private_path_length = mb_strlen($private_path);
-
   // Find the directory on the server where index.php resides.
   $local_dir = \Drupal::root() . '/';
 
@@ -793,28 +789,12 @@ function _filter_html_image_secure_process($text) {
     // Verify that $src starts with $base_path.
     // This also ensures that external images cannot be referenced.
     $src = $image->getAttribute('src');
-    if (mb_strlen($src, 0, $private_path_length) === $private_path) {
-      $private_image_path = mb_substr($src, $private_path_length);
-      $private_image_path = 'private://' . $private_image_path;
-      $image_object = \Drupal::service('image.factory')->get($private_image_path);
-      if ($image_object->getFileSize()) {
-        // The image has the right path. Erroneous images are dealt with below.
-        continue;
-      }
-    }
-    elseif (mb_substr($src, 0, $base_path_length) === $base_path) {
+    if (mb_substr($src, 0, $base_path_length) === $base_path) {
       // Remove the $base_path to get the path relative to the Drupal root.
       // Ensure the path refers to an actual image by prefixing the image source
       // with the Drupal root and running getimagesize() on it.
       $local_image_path = $local_dir . mb_substr($src, $base_path_length);
       $local_image_path = rawurldecode($local_image_path);
-
-      // Check for query string and remove it if present.
-      $parse_query_string = mb_substr($local_image_path, 0, strpos($local_image_path, '?'));
-      if (!empty($parse_query_string)) {
-        $local_image_path = $parse_query_string;
-      }
-
       if (@getimagesize($local_image_path)) {
         // The image has the right path. Erroneous images are dealt with below.
         continue;

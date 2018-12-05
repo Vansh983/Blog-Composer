@@ -299,15 +299,9 @@ function template_preprocess_color_scheme_form(&$variables) {
     $form['scheme']['#attached']['library'][] = $info['preview_library'];
   }
 
-  // A theme can declare the 'preview_html' as empty string in color.inc,
-  // so we check before setting the html_preview markup and attaching libraries
-  // if there is actually a preview set.
-  if (!empty($info['preview_html'])) {
   // Attempt to load preview HTML if the theme provides it.
   $preview_html_path = \Drupal::root() . '/' . (isset($info['preview_html']) ? drupal_get_path('theme', $theme) . '/' . $info['preview_html'] : drupal_get_path('module', 'color') . '/preview.html');
-
-    $variables['html_preview']['#markup'] = file_get_contents($preview_html_path);
-  }
+  $variables['html_preview']['#markup'] = file_get_contents($preview_html_path);
 }
 
 /**
