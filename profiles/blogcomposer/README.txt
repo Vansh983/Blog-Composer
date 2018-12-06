@@ -43,7 +43,7 @@ installation along the way. It will install the required modules and
 themes for your blog. You can change various configurations and start building
 your blog.
 
-You can set the header image and customize other parts of  your theme at 
+You can set the header image and customize other parts of  your theme at
 /admin/appearance/settings/bootstrap_clean_blog
 
 MORE INFORMATION
